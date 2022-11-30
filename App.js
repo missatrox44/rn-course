@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+  FlatList
+} from 'react-native';
 
 //root component rendered in app
 export default function App() {
@@ -14,10 +22,7 @@ export default function App() {
 
   //fired when button clicked
   function addGoalHandler() {
-    // console.log(enteredGoalText)
-    setCourseGoals(currentCourseGoals => [...courseGoals, enteredGoalText]);
-    //if new state depends on previous state, the following not the best way to update state
-    // setCourseGoals([...courseGoals, enteredGoalText])
+    setCourseGoals(currentCourseGoals => [...courseGoals, {text: enteredGoalText, key: Math.random().toString()}]);
   }
 
   return (
@@ -36,13 +41,13 @@ export default function App() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView alwaysBounceVertical={false}>
-          {courseGoals.map((goal) =>
-            // wrap text in view component so all styles will be applied
-            <View key={goal} style={styles.goalItem}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>)}
-        </ScrollView>
+        <FlatList data={courseGoals} renderItem={(itemData) => {
+          return (
+            <View style={styles.goalItem}>
+              <Text style={styles.goalText}>{itemData.item.text}</Text>
+            </View>
+          )
+        }} alwaysBounceVertical={false} />
       </View>
     </View>
   );
@@ -104,3 +109,7 @@ const styles = StyleSheet.create({
 
 //ScrollView has a LOT of props - some iOS only, Android only or both
 //bounce effect - look to docs for
+//ScrollView not good for lists instead use FlatList
+//ScrollView renders ALL child items - long list means performance issue
+
+//use keyExtractor prop takes in function -> takes in item/index provided by FlatList, used to get key for every item
