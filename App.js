@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
 
 //root component rendered in app
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
 
   //fired when button clicked
   function addGoalHandler() {
-    console.log(enteredGoalText)
+    // console.log(enteredGoalText)
     setCourseGoals(currentCourseGoals => [...courseGoals, enteredGoalText]);
     //if new state depends on previous state, the following not the best way to update state
     // setCourseGoals([...courseGoals, enteredGoalText])
@@ -36,11 +36,13 @@ export default function App() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => 
-        // wrap text in view component so all styles will be applied
-        <View key={goal} style={styles.goalItem}>
-          <Text style={styles.goalText}>{goal}</Text>
-        </View>)}
+        <ScrollView alwaysBounceVertical={false}>
+          {courseGoals.map((goal) =>
+            // wrap text in view component so all styles will be applied
+            <View key={goal} style={styles.goalItem}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>)}
+        </ScrollView>
       </View>
     </View>
   );
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5
-  }, 
+  },
   goalItem: {
     margin: 5,
     padding: 9,
@@ -98,3 +100,7 @@ const styles = StyleSheet.create({
 
 //STYLES DONT CASCADE!!
 //underlying native component for iOS <Text></Text> does not allow borderRadius prop - add to View
+
+
+//ScrollView has a LOT of props - some iOS only, Android only or both
+//bounce effect - look to docs for
