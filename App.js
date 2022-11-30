@@ -18,20 +18,35 @@ export default function App() {
 
   //fired when button clicked
   function addGoalHandler(enteredGoalText) {
-    setCourseGoals(currentCourseGoals => [...courseGoals, { text: enteredGoalText, key: Math.random().toString() }]);
+    setCourseGoals(currentCourseGoals => [...courseGoals, { text: enteredGoalText, id: Math.random().toString() }]);
+  }
+
+  function deleteGoalHandler(id) {
+    // console.log('DELETE')
+    setCourseGoals(currentCourseGoals => {
+      return currentCourseGoals.filter((goal) => goal.id !== id);
+    });
   }
 
   return (
-    //view equivalent to div
-    //only able to hold other components (ex: need <Text></Text> )
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler} /> 
+      <GoalInput onAddGoal={addGoalHandler} />
       <View style={styles.goalsContainer}>
-        <FlatList data={courseGoals} renderItem={(itemData) => {
-          return (
-            <GoalItem text={itemData.item.text} />
-          )
-        }} alwaysBounceVertical={false} />
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                onDeleteItem={deleteGoalHandler}
+                id={itemData.item.id}
+              />
+            )
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false} />
       </View>
     </View>
   );
