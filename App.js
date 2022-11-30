@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 //root component rendered in app
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState('');
-  const [courseGoals, setCourseGoals] = useState('');
+  //goal list dynamically rendered
+  const [courseGoals, setCourseGoals] = useState([]);
 
   //responsible for fetching user input
   function goalInputHandler(enteredText) {
@@ -35,8 +36,7 @@ export default function App() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        {/* {courseGoals.map((goal) => <Text key={goal}>{goal}</Text>)} */}
-        <Text>Goals will be dynamically rendered here</Text>
+        {courseGoals.map((goal) => <Text key={goal}>{goal}</Text>)}
       </View>
     </View>
   );
