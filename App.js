@@ -36,7 +36,11 @@ export default function App() {
         />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => <Text key={goal}>{goal}</Text>)}
+        {courseGoals.map((goal) => 
+        // wrap text in view component so all styles will be applied
+        <View key={goal} style={styles.goalItem}>
+          <Text style={styles.goalText}>{goal}</Text>
+        </View>)}
       </View>
     </View>
   );
@@ -69,6 +73,15 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5
+  }, 
+  goalItem: {
+    margin: 5,
+    padding: 9,
+    borderRadius: 8,
+    backgroundColor: '#2283F5',
+  },
+  goalText: {
+    color: '#DEEFFA'
   }
 });
 
@@ -83,3 +96,5 @@ const styles = StyleSheet.create({
 //child elements - align themselves along cross axis by stretching
 //configure child elements by how much space it should take of the space it can get along the main axis
 
+//STYLES DONT CASCADE!!
+//underlying native component for iOS <Text></Text> does not allow borderRadius prop - add to View
