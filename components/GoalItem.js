@@ -6,11 +6,18 @@ function GoalItem(props) {
 
   //use bind to pre-configure function for future execution
   return (
-    <Pressable onPress={props.onDeleteItem.bind(this, props.id)}>
-      <View style={styles.goalItem}>
+    <View style={styles.goalItem}>
+      <Pressable 
+      //android effect
+      android_ripple={{ color: '#211bd1' }} 
+      onPress={props.onDeleteItem.bind(this, props.id)}
+      //iOS effect
+      style={({pressed}) => pressed && styles.pressedItem }
+      >
         <Text style={styles.goalText}>{props.text}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
+
 
   )
 };
@@ -22,14 +29,18 @@ export default GoalItem;
 const styles = StyleSheet.create({
   goalItem: {
     margin: 5,
-    padding: 9,
     borderRadius: 8,
     backgroundColor: '#2283F5',
   },
+  pressedItem: {
+    opacity: 0.5
+  },
   goalText: {
-    color: '#DEEFFA'
+    color: '#DEEFFA',
+    padding: 9
   }
 });
 
 
 //Touchable is deprecated way - now use Pressable
+
